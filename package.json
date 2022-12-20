@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "createdb": "createdb trivia && psql -d trivia -f schema.sql",
     "start": "nodemon app.js",
     "test": "jest"
   },
