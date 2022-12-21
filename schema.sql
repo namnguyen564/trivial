@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   name TEXT,
@@ -6,13 +6,13 @@ CREATE TABLE users (
   password TEXT
 );
 
-DROP TABLE IF EXISTS quizes;
+DROP TABLE IF EXISTS quizes CASCADE;
 CREATE TABLE quizes (
   id SERIAL PRIMARY KEY,
   name TEXT
 );
 
-DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS questions CASCADE;
 CREATE TABLE questions (
   id SERIAL PRIMARY KEY,
   category TEXT,
@@ -29,8 +29,8 @@ CREATE TABLE questions (
       REFERENCES quizes(id)
 );
 
-DROP TABLE IF EXISTS answers;
-CREATE TABLE anwsers (
+DROP TABLE IF EXISTS answers CASCADE;
+CREATE TABLE answers (
     id SERIAL PRIMARY KEY,
     user_id INTEGER,
     question_id INTEGER,
