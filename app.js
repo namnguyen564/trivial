@@ -19,8 +19,9 @@ axios.get("https://the-trivia-api.com/api/questions?limit=10")
     .then(function(response){
         const APIResponse = response.data
         APIResponse.forEach(element => {
-            console.log(element)
-            console.log(`each element here... ${element}`)
+            const {category, difficulty, question, correctAnswer, incorrectAnswers} = element
+            const [answer1, answer2, answer3] = incorrectAnswers
+            console.log(answer1)
         });
 
     })
