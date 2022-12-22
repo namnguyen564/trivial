@@ -1,3 +1,9 @@
+const axios = require("axios")
+
+
 module.exports = {
-    testEnvironment: "jsdom"
+    testEnvironment: "jsdom",
+    globals: {
+        axios: axios
+    }
 }

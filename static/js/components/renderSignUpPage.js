@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export function renderSignUpPage(){
     const header = document.getElementById("header-nav");
     
@@ -30,7 +32,11 @@ export function renderSignUpPage(){
         
         console.log(data)
 
-
+        axios
+            .post("/users", data)
+            .then((response) =>{
+                console.log("congrats")
+            })
 
     })
 
