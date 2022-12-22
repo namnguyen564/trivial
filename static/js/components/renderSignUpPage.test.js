@@ -1,9 +1,8 @@
 import{renderSignUpPage} from './renderSignUpPage.js'
 import {fireEvent} from '@testing-library/dom'
 import MockAdapter from "axios-mock-adapter"
-import axios from "axios"
 
-const mockAxios = new MockAdapter(axios)
+const mockAxios = new MockAdapter(global.axios)
 
 beforeEach(function(){
     mockAxios.onPost("/users").reply(200, {status: "ok"})

@@ -34,7 +34,9 @@ axios.get("https://the-trivia-api.com/api/questions?limit=10")
 })
 
 
-
+app.post("/users", (req, res) =>{
+    res.json({"status": "ok"})
+})
 
 
 

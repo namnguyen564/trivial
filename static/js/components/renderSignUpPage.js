@@ -1,4 +1,4 @@
-import axios from "axios";
+
 
 export function renderSignUpPage(){
     const header = document.getElementById("header-nav");
