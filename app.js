@@ -33,8 +33,20 @@ axios.get("https://the-trivia-api.com/api/questions?limit=10")
     
 })
 
+app.get("/api/trivia", (req, res)=> {
+    const sql = 'SELECT * FROM quizes';
+    db.query(sql).then((result)=> {
+        res.json(result.rows);
+    })
+} )
 
-
+app.get("/api/trivia/:id", (req, res)=> {
+    const {id} = req.params;
+    const sql  = 'SELECT quizes.name, questions.question, questions.answer2, questions.answer3, questions.answer4, correct_answer FROM quizes INNER JOIN questions ON quizes.id = questions.quiz_id WHERE quizes.id = $1';
+    db.query(sql, [id]).then((result)=>{
+        res.json(result.rows);
+    })
+})
 
 
 
