@@ -6,7 +6,7 @@
   "scripts": {
     "createdb": "psql -d trivia -f schema.sql && psql -d trivia --file seed.sql",
     "start": "nodemon app.js",
-    "test": "jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/namnguyen564/trivial#readme",
   "devDependencies": {
     "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
     "nodemon": "^2.0.20"
   },
   "dependencies": {
