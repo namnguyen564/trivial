@@ -99,3 +99,7 @@ html {
     outline: none;
   
   }
+
+  .question {
+    display: none;
+  }
