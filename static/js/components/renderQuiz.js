@@ -1,6 +1,3 @@
-
-import { handleNext } from "./handleNext.js";
-
 // global state to track which question is being answered
 // corresponds to an index
 let currentQuestionId = 0;
@@ -19,13 +16,14 @@ export function renderQuiz(id) {
     renderedQuizes.push(id)
     event.stopPropagation();
     // console.log("rendering quiz id", id)
-    const quiz = document.getElementById(`quiz-${id}`);
+    // const quiz = document.getElementById(`quiz-${id}`);
+    const page = document.getElementById('page');
     axios.get(`http://localhost:3000/api/trivia/${id}`)
         .then((response)=>{
             const questions = response.data;
             console.log(questions);
             const questionContainer = document.createElement('div')
-            quiz.appendChild(questionContainer);
+            page.appendChild(questionContainer);
             questionContainer.id = 'question-container';
             for (let [index, question] of questions.entries()) {
                 const questionForm = document.createElement('form');
@@ -58,6 +56,7 @@ export function renderQuiz(id) {
                     const answer = formData.get('answer');
                     const score = answer== question.correct_answer ? 1 : 0;
                     const data = {
+                        // TODO:get user_id from session
                         user_id: 2,
                         quiz_id: question.quiz_id,
                         question_id: question.id,
@@ -79,7 +78,7 @@ export function renderQuiz(id) {
                                 const avgScore = Math.round(response.data.avg * 100);
                                 
                                 const result = document.createElement('p');
-                                result.innerText = `Your score for this quiz is: ${response.data.avg}%!`;
+                                result.innerText = `Your score for this quiz is: ${avgScore}%!`;
                                 questionContainer.replaceChildren(result);
                             })
                     }

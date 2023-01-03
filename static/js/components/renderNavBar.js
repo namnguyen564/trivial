@@ -7,7 +7,10 @@ export function rederNav() {
     <li id="quiz-list-button">Quizes</li>
     <li id="leaderboard-button">Leader Board</li>
     `;
-    document.getElementById('page').replaceChildren(navBar);
+
+    // document.getElementById('header-nav').replaceChildren(navBar);
+    // TODO:if logged in, use replace children instead of append child.
+    document.getElementById('header-nav').appendChild(navBar);
     document.getElementById("quiz-list-button").addEventListener('click', renderQuizList);
     // document.getElementById("leaderboard_button").addEventListener('click', renderLeaderboard);
 }

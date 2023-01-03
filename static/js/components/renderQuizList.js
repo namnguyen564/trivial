@@ -18,10 +18,10 @@ export function renderQuizList() {
             const quiz = document.createElement('li');
             quiz.id = `quiz-${item.id}`;
             quiz.innerHTML = `
-                ${item.name}
+                ${item.name} <button id="start-button">Start Quiz</button>
             `;
             quizList.appendChild(quiz);
-            document.getElementById(quiz.id).addEventListener('click', ()=>renderQuiz(item.id))
+            document.getElementById("start-button").addEventListener('click', ()=>renderQuiz(item.id))
            }
 
            })
