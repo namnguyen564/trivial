@@ -1,3 +1,4 @@
+
 import { handleNext } from "./handleNext.js";
 
 // global state to track which question is being answered
@@ -64,11 +65,25 @@ export function renderQuiz(id) {
                         score: score
                     };
                     console.log(data)
-                    incrementCurrentQuestion()
+                    
                     axios
                         .post("/api/trivia_answer", data)
                         .then((response) => {
                         console.log(response);})
+                    if (currentQuestionId == questions.length -1) {
+                        console.log(currentQuestionId);
+                        //TODO: replace user_id
+                        axios.get(`/api/trivia_answer?user_id=2&quiz_id=${question.quiz_id}`)
+                             .then((response) => {
+                                console.log(response.data.avg);
+                                const avgScore = Math.round(response.data.avg * 100);
+                                
+                                const result = document.createElement('p');
+                                result.innerText = `Your score for this quiz is: ${response.data.avg}%!`;
+                                questionContainer.replaceChildren(result);
+                            })
+                    }
+                    else {incrementCurrentQuestion()}
                 })
             }
         })

@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("./db/db.js");
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const { response } = require("express");
 const axios = require('axios').default;
 
 
@@ -56,6 +57,18 @@ app.post("/api/trivia_answer", (req, res)=> {
     // console.log(values);
     const sql = 'INSERT INTO answers (user_id, quiz_id, question_id, answer, score) VALUES ($1, $2, $3, $4, $5)';
     db.query(sql, values).then(()=> res.json({"status": "kinda-ok"}))
+})
+
+//getting scores from the quiz
+app.get("/api/trivia_answer", (req, res)=> {
+    // console.log(req.query)
+    // console.log(req.params)
+    const {user_id, quiz_id} = req.query;
+    const sql = 'SELECT AVG(score) FROM answers WHERE user_id=$1 AND quiz_id=$2 GROUP BY quiz_id;'
+    db.query(sql, [user_id, quiz_id]).then((response)=> {
+        // res.json({"status": "pretty-good", "data": response.rows[0]})
+        res.json(response.rows[0]);
+    })
 })
 
 app.listen(PORT, function () {
