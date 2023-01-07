@@ -3,7 +3,7 @@ export function createQuiz() {
     page.replaceChildren()
 
     const quizForm = `
-    <form action="/static/index.html" method="get">
+    <form action="/api/trivia/" method="get">
     <label for="Quiz Name">Quiz Name</label>
     <input type="text" name="Quiz Name" id="Quiz Name">
     <label for="category">Pick a category</label>
