@@ -42,6 +42,7 @@ app.get("/api/trivia", (req, res)=> {
     })
 } )
 
+
 app.get("/api/trivia/:id", (req, res)=> {
     const {id} = req.params;
     const sql  = 'SELECT questions.id, quizes.name, questions.question, questions.answer1, questions.answer2, questions.answer3, questions.answer4, correct_answer, questions.quiz_id FROM quizes INNER JOIN questions ON quizes.id = questions.quiz_id WHERE quizes.id = $1';
@@ -50,6 +51,13 @@ app.get("/api/trivia/:id", (req, res)=> {
     })
 })
 
+app.post('/users', (req, res) => {
+    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);'
+    db.query(sql, values).then(()=> 
+    res.json({"status": "kinda-ok"}));
+})
+
+
 app.post("/api/trivia_answer", (req, res)=> {
     // console.log(req.body);
     const {quiz_id, question_id, user_id, answer, score} = req.body;
@@ -57,6 +65,7 @@ app.post("/api/trivia_answer", (req, res)=> {
     // console.log(values);
     const sql = 'INSERT INTO answers (user_id, quiz_id, question_id, answer, score) VALUES ($1, $2, $3, $4, $5)';
     db.query(sql, values).then(()=> res.json({"status": "kinda-ok"}))
+
 })
 
 //getting scores from the quiz
