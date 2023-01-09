@@ -100,6 +100,9 @@ app.get("/api/trivia_answer", (req, res)=> {
         res.json(response.rows[0]);
     })
 })
+    app.post("/users", (req, res) =>{
+        res.json({"status": "ok"})
+    })
 
 
 

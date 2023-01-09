@@ -1,3 +1,5 @@
+import{renderSignUpPage} from './renderSignUpPage.js'
+
 export function renderLoginPage() {
     const header = document.getElementById("header-nav");
     header.innerHTML = `
@@ -6,9 +8,11 @@ export function renderLoginPage() {
        <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
        <input type="submit" value="Login" id="login-form-submit">
 
-       <input type="submit" value="Sign Up" id="test-form-submit">
-       <input type="submit" value="Guest Login" id="test-form-submit">
+       <input type="submit" value="Sign Up" id="signUpButton">
+       <input type="submit" value="Guest Login" >
       `;
+
+      document.getElementById('signUpButton').addEventListener('click', renderSignUpPage)
 
       
   }
