@@ -1,4 +1,4 @@
-export function createQuiz() {
+export function renderNewQuizForm() {
     const page = document.getElementById('page')
     page.replaceChildren()
 

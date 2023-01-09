@@ -1,8 +1,8 @@
 import{renderLoginPage} from './components/renderLoginPage.js'
 import{rederNav} from './components/renderNavBar.js'
-import { createQuiz } from './components/createQuiz.js'
+import { renderNewQuizForm } from './components/createQuiz.js'
 
-createQuiz()
+// createQuiz()
 // renderLoginPage()
 rederNav()
 

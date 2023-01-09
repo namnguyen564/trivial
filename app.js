@@ -10,7 +10,7 @@ const app = express();
 app.use(express.static("static"));
 app.use(bodyParser.json());
 
-const PORT = 3000;
+const PORT = 3001;
 
 app.get("/api/hello", (req, res) => {
     res.json({ message: "hello" })
@@ -18,10 +18,12 @@ app.get("/api/hello", (req, res) => {
 // get request to trivia API for 10x questions and adds to database
 app.get("/api/trivia", (req, res) => {
     const quizName = req.query["Quiz Name"]
-    const userCatagory = req.query["category"]
+    const userCategory = req.query["category"]
     console.log(quizName)
-    console.log(userCatagory)
+    console.log(userCategory)
 
+    // Checks if user entered random category and adds 10 random questions to the db 
+    if(userCategory == "Random"){
     axios.get("https://the-trivia-api.com/api/questions?limit=10")
         .then(function (response) {
             const APIResponse = response.data
@@ -35,7 +37,23 @@ app.get("/api/trivia", (req, res) => {
                 })
             })
         })
-})
+}
+// If user selects category calls API with specific category 
+else if (userCategory !== "Random"){
+    axios.get(`https://the-trivia-api.com/api/questions?limit=10&categories=${userCategory}`)
+        .then(function (response){
+            const APIResponse = response.data
+            APIResponse.forEach(element => {
+                const { category, difficulty, question, correctAnswer, incorrectAnswers } = element
+                const [answer1, answer2, answer3] = incorrectAnswers
+                const sql = `
+            INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3, correct_answer)
+            VALUES($1,$2,$3,$4,$5,$6,$7)`
+                db.query(sql, [category, difficulty, question, answer1, answer2, answer3, correctAnswer]).then(() => {
+                })
+            })
+        })
+}})
 
 app.get("/api/trivia", (req, res)=> {
     const sql = 'SELECT * FROM quizes';
