@@ -9,7 +9,7 @@ const bcrpyt = require('bcrypt');
 const app = express();
 
 app.use(express.static("static"));
-app.use(bodyParser.json());
+    app.use(bodyParser.json());
 
 const PORT = 3000;
 
@@ -88,6 +88,21 @@ app.post('/users', (req, res) => {
 })
 
 
+app.get("/users", (req, res) =>{
+    let { email, password_hash } = req.body
+
+    const sql = 'SELECT email,password FROM users WHERE email=$1 AND password=$2';
+    db.query(sql, [email,password_hash])
+    .then((loginResponse)=>
+   
+    res.json("correct login buddy"));
+    
+})
+
+
+
+
+
 app.post("/api/trivia_answer", (req, res)=> {
     // console.log(req.body);
     const {quiz_id, question_id, user_id, answer, score} = req.body;
@@ -112,6 +127,7 @@ app.get("/api/trivia_answer", (req, res)=> {
     app.post("/users", (req, res) =>{
         res.json({"status": "ok"})
     })
+
 
 
 

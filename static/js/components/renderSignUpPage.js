@@ -2,6 +2,7 @@
 
 export function renderSignUpPage(){
     const header = document.getElementById("header-nav");
+    const errorMsg = document.getElementById("error-msg")
     
     header.innerHTML = `
     <h1>Sign Up Page</h1>
@@ -30,13 +31,38 @@ export function renderSignUpPage(){
             password: signUpData.get("password")
         }
         
-        console.log(data)
-
-        axios
+        if (data.name == "" || data.email == "" || data.password == "") {
+            errorMsg.innerText = "Missing Input"
+            res.status(400).json({
+                message: `Missing Input`
+            })
+        } else if (data.name.length > 12 || data.email.length > 12 || data.password.length > 12) {
+            errorMsg.innerText = "Too Many Characters!"
+            res.status(400).json({
+                
+                message: `Too many characters!`
+               
+            })
+        }else{
+            axios
             .post("/users", data)
             .then((response) =>{
+                header.innerHTML =  `
+                <h1>Signed In Mate</h1>
+                `
                 console.log(response)
             })
+ 
+        }
+
+        // axios
+        //     .post("/users", data)
+        //     .then((response) =>{
+        //         header.innerHTML =  `
+        //         <h1>Signed In Mate</h1>
+        //         `
+        //         console.log(response)
+        //     })
 
     })
 
