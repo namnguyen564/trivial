@@ -1,7 +1,7 @@
 // global state to track which question is being answered
 // corresponds to an index
 let currentQuestionId = 0;
-let renderedQuizes = []
+// let renderedQuizes = []
 
 function handleChange(e){
     // e.preventDefault();
@@ -9,11 +9,11 @@ function handleChange(e){
     return true;
   }
 export function renderQuiz(id) {
-    if (renderedQuizes.find(it => it === id)) {
-        console.log(`already rendered quiz: ${id}`)
-        return
-    }
-    renderedQuizes.push(id)
+    // if (renderedQuizes.find(it => it === id)) {
+    //     console.log(`already rendered quiz: ${id}`)
+    //     return
+    // }
+    // renderedQuizes.push(id)
     event.stopPropagation();
     // console.log("rendering quiz id", id)
     // const quiz = document.getElementById(`quiz-${id}`);
@@ -34,7 +34,7 @@ export function renderQuiz(id) {
 //   </div>
 
 // </div>
-    axios.get(`http://localhost:3000/api/trivia/${id}`)
+    axios.get(`http://localhost:3000/api/quiz/${id}`)
         .then((response)=>{
             const questions = response.data;
             console.log(questions);

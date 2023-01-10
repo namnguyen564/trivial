@@ -126,9 +126,13 @@ html {
     margin: auto;
     /* padding: 7px; */
   }
+#header-nav {
+  width: 100%;
+}
 
 #navList {
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
 }
 #navList li{
@@ -186,4 +190,7 @@ html {
 .modal-body {padding: 10px 10px;}
 .modal-body h1 {
   text-align: center;
+}
+#page li{
+  list-style: none;
 }
