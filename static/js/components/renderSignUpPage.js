@@ -35,7 +35,7 @@ export function renderSignUpPage(){
         axios
             .post("/users", data)
             .then((response) =>{
-                console.log("congrats")
+                console.log(response)
             })
 
     })
