@@ -1,7 +1,9 @@
+
 const express = require("express");
 const db = require("./db/db.js");
 const bodyParser = require('body-parser');
 const axios = require('axios').default;
+const bcrpyt = require('bcrypt');
 
 
 const app = express();
@@ -73,9 +75,16 @@ app.get("/api/quiz/:id", (req, res)=> {
 })
 
 app.post('/users', (req, res) => {
-    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);'
-    db.query(sql, values).then(()=> 
+    
+    let { name, email, password_hash} = req.body
+
+    // const generateHash = bcrpyt.hashSync(password_hash, bcrpyt.genSaltSync(10), null)
+    
+    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);';
+    db.query(sql, [name,email,password_hash])
+    .then(()=> 
     res.json({"status": "kinda-ok"}));
+    
 })
 
 
