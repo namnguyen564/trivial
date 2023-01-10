@@ -20,12 +20,22 @@ app.get("/api/trivia", (req, res) => {
     const userCategory = req.query["category"]
     console.log(quizName)
     console.log(userCategory)
+    // adds quiz name in quizes table 
+    const sqlName = `
+    INSERT INTO quizes(name)
+    VALUES($1);
+    `
+    db.query(sqlName, [quizName]).then(() => {    console.log("added sql quiz name")
+    })
+
+
 
     // Checks if user entered random category and adds 10 random questions to the db 
     if(userCategory == "Random"){
     axios.get("https://the-trivia-api.com/api/questions?limit=10")
         .then(function (response) {
             const APIResponse = response.data
+
             APIResponse.forEach(element => {
                 const { category, difficulty, question, correctAnswer, incorrectAnswers } = element
                 const [answer1, answer2, answer3] = incorrectAnswers
