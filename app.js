@@ -89,11 +89,24 @@ app.post('/users', (req, res) => {
 app.post("/users/login", (req, res) =>{
     let { email, password_hash } = req.body
 
-    const sql = 'SELECT email,password FROM users WHERE email=$1 AND password=$2';
+    const sql = 'SELECT id,email,password FROM users WHERE email=$1 AND password=$2';
     db.query(sql, [email,password_hash])
-    .then((loginResponse)=>
+    .then((queryResult)=> {
+        console.log(queryResult.rows)
+        
+        if(queryResult.rows.length == 0){
+            
+            res.json({"status": "no one "})
+        } else {
+            const userRow = queryResult.rows[0]
+            //TO DO, STORE USER SESSION HERE
+        }
 
-    res.json("correct login buddy"));
+
+        res.json("correct login buddy")
+        });
+    
+    
 
 })
 
