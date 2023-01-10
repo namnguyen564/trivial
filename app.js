@@ -1,7 +1,6 @@
 const express = require("express");
 const db = require("./db/db.js");
 const bodyParser = require('body-parser');
-const { response } = require("express");
 const axios = require('axios').default;
 
 
@@ -10,7 +9,7 @@ const app = express();
 app.use(express.static("static"));
 app.use(bodyParser.json());
 
-const PORT = 3001;
+const PORT = 3000;
 
 app.get("/api/hello", (req, res) => {
     res.json({ message: "hello" })
@@ -55,15 +54,17 @@ else if (userCategory !== "Random"){
         })
 }})
 
-app.get("/api/trivia", (req, res)=> {
-    const sql = 'SELECT * FROM quizes';
+app.get("/api/quiz", (req, res)=> {
+    // console.log("app trivia endpoint hit")
+    const sql = 'SELECT * FROM quizes;'
     db.query(sql).then((result)=> {
+
         res.json(result.rows);
     })
 } )
 
 
-app.get("/api/trivia/:id", (req, res)=> {
+app.get("/api/quiz/:id", (req, res)=> {
     const {id} = req.params;
     const sql  = 'SELECT questions.id, quizes.name, questions.question, questions.answer1, questions.answer2, questions.answer3, questions.answer4, correct_answer, questions.quiz_id FROM quizes INNER JOIN questions ON quizes.id = questions.quiz_id WHERE quizes.id = $1';
     db.query(sql, [id]).then((result)=>{
