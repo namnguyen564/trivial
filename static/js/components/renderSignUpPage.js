@@ -1,4 +1,4 @@
-
+// import{rederNav} from './components/renderNavBar.js'
 
 export function renderSignUpPage() {
     const header = document.getElementById("header-nav");
@@ -28,7 +28,7 @@ export function renderSignUpPage() {
         const data = {
             name: signUpData.get("name"),
             email: signUpData.get("email"),
-            password: signUpData.get("password")
+            password_hash: signUpData.get("password")
         }
 
         console.log(data)
@@ -38,7 +38,7 @@ export function renderSignUpPage() {
             // res.status(400).json({
             //     message: `Missing Input`
             // })
-        } else if (data.name.length > 12 || data.email.length > 12 || data.password.length > 12) {
+        } else if (data.name.length > 15 || data.email.length > 25 || data.password_hash.length > 15) {
             errorMsg.innerText = "Too Many Characters!"
             // res.status(400).json({
 
@@ -48,9 +48,10 @@ export function renderSignUpPage() {
         } else {
 
             axios
-                .post("/users", data)
+                .post("/users",data)
                 .then((response) => {
-                    console.log("congrats")
+                    console.log(response)
+                    // rederNav()
                 })
 
         }

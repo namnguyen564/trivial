@@ -99,11 +99,12 @@ app.post("/users/login", (req, res) =>{
             res.json({"status": "no one "})
         } else {
             const userRow = queryResult.rows[0]
+            res.json({"status": "found them!"})
             //TO DO, STORE USER SESSION HERE
         }
 
 
-        res.json("correct login buddy")
+        
         });
     
     
