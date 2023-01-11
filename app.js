@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("./db/db.js");
 const bodyParser = require('body-parser');
 const axios = require('axios').default;
+const bcrypt = require('bcrypt')
 
 
 const app = express();
@@ -73,9 +74,40 @@ app.get("/api/quiz/:id", (req, res)=> {
 })
 
 app.post('/users', (req, res) => {
-    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);'
-    db.query(sql, values).then(()=> 
+  
+    let { name, email, password_hash} = req.body
+    console.log(name,email,password_hash)
+    const generateHash = bcrypt.hashSync(password_hash, bcrypt.genSaltSync(10),null)
+
+    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);';
+    db.query(sql, [name,email,generateHash])
+    .then(()=> 
     res.json({"status": "kinda-ok"}));
+
+})
+
+app.post("/users/login", (req, res) =>{
+    let { email, password_hash } = req.body
+
+    const sql = 'SELECT id,email,password FROM users WHERE email=$1 AND password=$2';
+    db.query(sql, [email,password_hash])
+    .then((queryResult)=> {
+        console.log(queryResult.rows)
+        
+        if(queryResult.rows.length == 0){
+            
+            res.json({"status": "no one "})
+        } else {
+            const userRow = queryResult.rows[0]
+            //TO DO, STORE USER SESSION HERE
+        }
+
+
+        res.json("correct login buddy")
+        });
+    
+    
+
 })
 
 
