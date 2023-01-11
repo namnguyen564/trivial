@@ -1,7 +1,13 @@
 const express = require("express");
 const db = require("./db/db.js");
 const bodyParser = require('body-parser');
+const { response } = require("express");
 const axios = require('axios').default;
+
+const bcrypt = require('bcrypt')
+
+
+
 const app = express();
 
 
@@ -41,10 +47,18 @@ app.get("/api/trivia", (req, res) => {
             APIResponse.forEach(element => {
                 const { category, difficulty, question, correctAnswer, incorrectAnswers } = element
                 const [answer1, answer2, answer3] = incorrectAnswers
+                
                 const sql = `
+
             INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3,answer4, correct_answer, quiz_id)
             VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`
                 db.query(sql, [category, difficulty, question, answer1, answer2, answer3,correctAnswer, correctAnswer, quizID]).then(() => {
+
+            INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3, correct_answer)
+            VALUES($1,$2,$3,$4,$5,$6,$7);`
+            
+                db.query(sql, [category, difficulty, question, correctAnswer, answer1, answer2, answer3, correctAnswer]).then(() => {
+
                 })
             })
             // once new quiz loaded into db, response 200 
@@ -62,6 +76,18 @@ else if (userCategory !== "Random"){
             INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3,answer4,correct_answer, quiz_id)
             VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`
                 db.query(sql, [category, difficulty, question, answer1, answer2, answer3,correctAnswer, correctAnswer, quizID]).then(() => {
+=======
+            const sql = `
+            INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3, correct_answer)
+            VALUES($1,$2,$3,$4,$5,$6,$7)`
+            // const sql = `WITH first_insert AS (
+            //     INSERT INTO quizes(name)
+            //     VALUES ($1)
+            //     RETURNING id as quiz_id) 
+            //     INSERT INTO questions (category, difficulty, question, answer1, answer2, answer3, answer4, correct_answer, quiz_id)
+            //     VALUES ($2, $3, $4, $5, $6, $7, $8, $9, $10);
+            // )`
+                db.query(sql, [category, difficulty, question, correctAnswer, answer1, answer2, answer3, correctAnswer]).then(() => {
                 })
             })
         })
@@ -86,9 +112,41 @@ app.get("/api/quiz/:id", (req, res)=> {
 })
 
 app.post('/users', (req, res) => {
-    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);'
-    db.query(sql, values).then(()=> 
+  
+    let { name, email, password_hash} = req.body
+    console.log(name,email,password_hash)
+    const generateHash = bcrypt.hashSync(password_hash, bcrypt.genSaltSync(10),null)
+
+    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);';
+    db.query(sql, [name,email,generateHash])
+    .then(()=> 
     res.json({"status": "kinda-ok"}));
+
+})
+
+app.post("/users/login", (req, res) =>{
+    let { email, password_hash } = req.body
+
+    const sql = 'SELECT id,email,password FROM users WHERE email=$1 AND password=$2';
+    db.query(sql, [email,password_hash])
+    .then((queryResult)=> {
+        console.log(queryResult.rows)
+        
+        if(queryResult.rows.length == 0){
+            
+            res.json({"status": "noUsers"})
+        } else {
+            const userRow = queryResult.rows[0]
+            res.json({"status": "verifiedUser"})
+            //TO DO, STORE USER SESSION HERE
+        }
+
+
+        
+        });
+    
+    
+
 })
 
 
@@ -107,13 +165,26 @@ app.get("/api/trivia_answer", (req, res)=> {
     // console.log(req.query)
     // console.log(req.params)
     const {user_id, quiz_id} = req.query;
-    const sql = 'SELECT AVG(score) FROM answers WHERE user_id=$1 AND quiz_id=$2 GROUP BY quiz_id;'
+    // const sql = 'SELECT AVG(score) FROM answers WHERE user_id=$1 AND quiz_id=$2 GROUP BY quiz_id;'
+    const sql = 'SELECT AVG(answers.score), quizes.name FROM answers INNER JOIN quizes ON answers.quiz_id = quizes.id WHERE answers.user_id=$1 AND answers.quiz_id=$2 GROUP BY quizes.name;'
     db.query(sql, [user_id, quiz_id]).then((response)=> {
         // res.json({"status": "pretty-good", "data": response.rows[0]})
         res.json(response.rows[0]);
     })
 })
 
+app.get("/api/leaderboard", (req, res)=> {
+    //     SELECT *
+    // FROM Table1 
+    // INNER JOIN Table2
+    //     ON Condition
+    // INNER JOIN Table3
+    //     ON Condition;
+    const sql = 'SELECT AVG(answers.score), users.name AS user, quizes.name AS quiz FROM answers INNER JOIN quizes ON answers.quiz_id = quizes.id INNER JOIN users ON answers.user_id = users.id GROUP BY users.id,quizes.id;'
+    db.query(sql). then((response)=> {
+        res.json(response.rows);
+    })
+})
 
 
 app.listen(PORT, function () {

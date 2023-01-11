@@ -1,8 +1,9 @@
+// import{rederNav} from './components/renderNavBar.js'
 
-
-export function renderSignUpPage(){
+export function renderSignUpPage() {
     const header = document.getElementById("header-nav");
-    
+    const errorMsg = document.getElementById("error-msg")
+
     header.innerHTML = `
     <h1>Sign Up Page</h1>
 
@@ -19,7 +20,7 @@ export function renderSignUpPage(){
     // signUpForm.setAttribute("method", "POST")
     header.appendChild(signUpForm)
 
-    signUpForm.addEventListener("submit", function(event){
+    signUpForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
         const signUpData = new FormData(signUpForm)
@@ -27,20 +28,36 @@ export function renderSignUpPage(){
         const data = {
             name: signUpData.get("name"),
             email: signUpData.get("email"),
-            password: signUpData.get("password")
+            password_hash: signUpData.get("password")
         }
-        
+
         console.log(data)
 
-        axios
-            .post("/users", data)
-            .then((response) =>{
-                console.log("congrats")
-            })
+        if (data.name == "" || data.email == "" || data.password == "") {
+            errorMsg.innerText = "Missing Input"
+            // res.status(400).json({
+            //     message: `Missing Input`
+            // })
+        } else if (data.name.length > 15 || data.email.length > 25 || data.password_hash.length > 15) {
+            errorMsg.innerText = "Too Many Characters!"
+            // res.status(400).json({
 
+            //     message: `Too many characters!`
+
+            // })
+        } else {
+
+            axios
+                .post("/users",data)
+                .then((response) => {
+                    console.log(response)
+                    // rederNav()
+                })
+
+        }
     })
 
 
-    
+
 
 }

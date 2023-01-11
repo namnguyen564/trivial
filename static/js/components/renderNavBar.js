@@ -1,5 +1,6 @@
 import { renderQuizList } from "./renderQuizList.js";
 import { renderNewQuizForm } from "./createQuiz.js";
+import { renderLeaderboard } from "./renderLeaderboard.js";
 
 export function rederNav() {
     const navBar = document.createElement('ul');
@@ -15,5 +16,5 @@ export function rederNav() {
     document.getElementById('header-nav').appendChild(navBar);
     document.getElementById("quiz-list-button").addEventListener('click', renderQuizList);
     document.getElementById("new-quiz-button").addEventListener('click', renderNewQuizForm)
-    // document.getElementById("leaderboard_button").addEventListener('click', renderLeaderboard);
+    document.getElementById("leaderboard-button").addEventListener('click', renderLeaderboard);
 }
