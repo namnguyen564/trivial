@@ -3,6 +3,6 @@ import{rederNav} from './components/renderNavBar.js'
 import { renderNewQuizForm } from './components/createQuiz.js'
 
 // createQuiz()
-// renderLoginPage()
+renderLoginPage()
 rederNav()
 

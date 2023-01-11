@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("./db/db.js");
 const bodyParser = require('body-parser');
+const { response } = require("express");
 const axios = require('axios').default;
 
 
@@ -29,10 +30,12 @@ app.get("/api/trivia", (req, res) => {
             APIResponse.forEach(element => {
                 const { category, difficulty, question, correctAnswer, incorrectAnswers } = element
                 const [answer1, answer2, answer3] = incorrectAnswers
+                
                 const sql = `
             INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3, correct_answer)
-            VALUES($1,$2,$3,$4,$5,$6,$7)`
-                db.query(sql, [category, difficulty, question, answer1, answer2, answer3, correctAnswer]).then(() => {
+            VALUES($1,$2,$3,$4,$5,$6,$7);`
+            
+                db.query(sql, [category, difficulty, question, correctAnswer, answer1, answer2, answer3, correctAnswer]).then(() => {
                 })
             })
         })
@@ -45,10 +48,17 @@ else if (userCategory !== "Random"){
             APIResponse.forEach(element => {
                 const { category, difficulty, question, correctAnswer, incorrectAnswers } = element
                 const [answer1, answer2, answer3] = incorrectAnswers
-                const sql = `
+            const sql = `
             INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3, correct_answer)
             VALUES($1,$2,$3,$4,$5,$6,$7)`
-                db.query(sql, [category, difficulty, question, answer1, answer2, answer3, correctAnswer]).then(() => {
+            // const sql = `WITH first_insert AS (
+            //     INSERT INTO quizes(name)
+            //     VALUES ($1)
+            //     RETURNING id as quiz_id) 
+            //     INSERT INTO questions (category, difficulty, question, answer1, answer2, answer3, answer4, correct_answer, quiz_id)
+            //     VALUES ($2, $3, $4, $5, $6, $7, $8, $9, $10);
+            // )`
+                db.query(sql, [category, difficulty, question, correctAnswer, answer1, answer2, answer3, correctAnswer]).then(() => {
                 })
             })
         })
@@ -94,13 +104,26 @@ app.get("/api/trivia_answer", (req, res)=> {
     // console.log(req.query)
     // console.log(req.params)
     const {user_id, quiz_id} = req.query;
-    const sql = 'SELECT AVG(score) FROM answers WHERE user_id=$1 AND quiz_id=$2 GROUP BY quiz_id;'
+    // const sql = 'SELECT AVG(score) FROM answers WHERE user_id=$1 AND quiz_id=$2 GROUP BY quiz_id;'
+    const sql = 'SELECT AVG(answers.score), quizes.name FROM answers INNER JOIN quizes ON answers.quiz_id = quizes.id WHERE answers.user_id=$1 AND answers.quiz_id=$2 GROUP BY quizes.name;'
     db.query(sql, [user_id, quiz_id]).then((response)=> {
         // res.json({"status": "pretty-good", "data": response.rows[0]})
         res.json(response.rows[0]);
     })
 })
 
+app.get("/api/leaderboard", (req, res)=> {
+    //     SELECT *
+    // FROM Table1 
+    // INNER JOIN Table2
+    //     ON Condition
+    // INNER JOIN Table3
+    //     ON Condition;
+    const sql = 'SELECT AVG(answers.score), users.name AS user, quizes.name AS quiz FROM answers INNER JOIN quizes ON answers.quiz_id = quizes.id INNER JOIN users ON answers.user_id = users.id GROUP BY users.id,quizes.id;'
+    db.query(sql). then((response)=> {
+        res.json(response.rows);
+    })
+})
 
 
 app.listen(PORT, function () {
