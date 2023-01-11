@@ -96,10 +96,10 @@ app.post("/users/login", (req, res) =>{
         
         if(queryResult.rows.length == 0){
             
-            res.json({"status": "no one "})
+            res.json({"status": "noUsers"})
         } else {
             const userRow = queryResult.rows[0]
-            res.json({"status": "found them!"})
+            res.json({"status": "verifiedUser"})
             //TO DO, STORE USER SESSION HERE
         }
 
