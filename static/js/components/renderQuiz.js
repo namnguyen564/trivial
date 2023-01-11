@@ -127,7 +127,7 @@ export function renderQuiz(id) {
                         //TODO: replace user_id
                         axios.get(`/api/trivia_answer?user_id=2&quiz_id=${question.quiz_id}`)
                              .then((response) => {
-                                console.log(response.data.avg);
+                                console.log(response.data);
                                 const avgScore = Math.round(response.data.avg * 100);
                                 
                                 // const result = document.createElement('h2');
@@ -136,10 +136,10 @@ export function renderQuiz(id) {
                                 questionContent.innerHTML = 
                                 `<div class="modal-header">
                                     <span id="finish-quiz-close-btn" class="close">&times;</span>
-                                    <h2>Your score for this quiz is: </h2>
+                                    <h2>${response.data.name}</h2>
                                 </div>
                                 <div class="modal-body">
-                                    <h1>${avgScore}%</h1>
+                                    <h1>Your score is: ${avgScore}%</h1>
                                 </div>
                                 `;
                                 questionContent.classList.remove('question');
