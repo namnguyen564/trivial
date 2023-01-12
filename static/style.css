@@ -104,7 +104,7 @@ html {
     display: none;
   }
 
-  #start-button,  #question-container button {
+li button,  #question-container button {
     padding: 7px;
     border: none;
     border-radius: 5px;
@@ -114,6 +114,9 @@ html {
     cursor: pointer;
     outline: none;
   }
+#page li {
+  padding: 5px;
+} 
 
 #page {
   width: 100%
