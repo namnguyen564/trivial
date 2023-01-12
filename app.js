@@ -112,12 +112,11 @@ app.post('/users', (req, res) => {
     db.query(sql, [name, email, generateHash])
         .then(() =>
             res.json({ "status": "kinda-ok" }));
-})
-    .catch((err) => {
-        res.status(500).json({
-            message: 'server error'
-        })
     })
+    
+    
+    
+
 
 
 
@@ -125,7 +124,7 @@ app.post("/users/login", async (req, res) => {
     let { email, password_hash } = req.body
 
 
-    const sql = 'SELECT id,password FROM users WHERE email=$1';
+    const sql = 'SELECT id,name,password,email FROM users WHERE email=$1';
     db.query(sql, [email])
         .then((queryResult) => {
             console.log(queryResult.rows)
@@ -142,6 +141,8 @@ app.post("/users/login", async (req, res) => {
                 bcrypt.compare(password_hash, userRow.password, function (err, result) {
                     if (result) {
                         req.session.userId = userRow.id
+                        req.session.userName = userRow.name
+                        req.session.userEmail = userRow.email
                         console.log(req.session.userId)
                         console.log("killme")
                         res.status(200).json({
