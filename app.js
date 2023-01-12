@@ -115,18 +115,26 @@ app.post('/users', (req, res) => {
     console.log(name, email, password_hash)
     const generateHash = bcrypt.hashSync(password_hash, bcrypt.genSaltSync(10), null)
 
-    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);'
+    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *;'
 
-    db.query(sql, [name, email, generateHash]).then(() =>
-            res.json({ "status": "kinda-ok" }));
+    db.query(sql, [name, email, generateHash]).then((result,err) => {
+        if(err){
+            res.status(400)
+        }
+        console.log("response",result,err)
+        const id = result.rows[0].id
+        req.session.userId = id
+        console.log(req.session.userId)
+        res.json({ "status": "kinda-ok" })
+    });
                 
-    })
+})
    
    
 
 
 
-app.post("/users/login", async (req, res) => {
+app.post("/users/login", (req, res) => {
     let { email, password_hash } = req.body
 
 
@@ -157,7 +165,7 @@ app.post("/users/login", async (req, res) => {
 
                     } else {
                         res.status(404).json({
-                            message: `No Email Found`
+                            message: `Cannot Log In`
                         })
                     }
 
