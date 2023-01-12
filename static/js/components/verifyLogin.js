@@ -17,15 +17,19 @@ export function verifyLogin(){
 
         console.log(data)
 
-
-      
         axios
             .post("/users/login", data)
             .then((response) =>{
+                
                 // header.innerHTML =  `
                 // <h1>Signed In Mate</h1>
                 // `
                 console.log(response)
+                location.reload()
+
+            })
+            .catch((err) =>{
+                console.log(err)
             })
 
     })
