@@ -4,11 +4,14 @@ const db = require("./db/db.js");
 const bodyParser = require('body-parser');
 const { response } = require("express");
 const axios = require('axios').default;
+
 const bcrypt = require('bcrypt')
 const expressSession = require("express-session")
 
 
+
 const app = express();
+
 
 app.use(express.static("static"));
 app.use(bodyParser.json());
@@ -32,54 +35,59 @@ app.get("/api/hello", (req, res) => {
     res.json({ message: "hello" })
 })
 // get request to trivia API for 10x questions and adds to database
-app.get("/api/trivia", (req, res) => {
-    const quizName = req.query["Quiz Name"]
-    const userCategory = req.query["category"]
+app.post("/api/trivia", (req, res) => {
+    const quizName = req.body.quizName
+    const userCategory = req.body.category
     console.log(quizName)
     console.log(userCategory)
+    // adds quiz name in quizes table 
+    const sqlName = `
+    INSERT INTO quizes(name)
+    VALUES($1)
+    RETURNING id
+    ;
+    `
+    db.query(sqlName, [quizName]).then(function (event) {
+        let quizID = event.rows[0].id
+        getQuizQestions(quizID, res, userCategory)
 
-    // Checks if user entered random category and adds 10 random questions to the db 
-    if (userCategory == "Random") {
-        axios.get("https://the-trivia-api.com/api/questions?limit=10")
-            .then(function (response) {
-                const APIResponse = response.data
-                APIResponse.forEach(element => {
-                    const { category, difficulty, question, correctAnswer, incorrectAnswers } = element
-                    const [answer1, answer2, answer3] = incorrectAnswers
+    })
 
-                    const sql = `
-            INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3, correct_answer)
-            VALUES($1,$2,$3,$4,$5,$6,$7);`
 
-                    db.query(sql, [category, difficulty, question, correctAnswer, answer1, answer2, answer3, correctAnswer]).then(() => {
-                    })
-                })
-            })
-    }
-    // If user selects category calls API with specific category 
-    else if (userCategory !== "Random") {
-        axios.get(`https://the-trivia-api.com/api/questions?limit=10&categories=${userCategory}`)
-            .then(function (response) {
-                const APIResponse = response.data
-                APIResponse.forEach(element => {
-                    const { category, difficulty, question, correctAnswer, incorrectAnswers } = element
-                    const [answer1, answer2, answer3] = incorrectAnswers
-                    const sql = `
-            INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3, correct_answer)
-            VALUES($1,$2,$3,$4,$5,$6,$7)`
-                    // const sql = `WITH first_insert AS (
-                    //     INSERT INTO quizes(name)
-                    //     VALUES ($1)
-                    //     RETURNING id as quiz_id) 
-                    //     INSERT INTO questions (category, difficulty, question, answer1, answer2, answer3, answer4, correct_answer, quiz_id)
-                    //     VALUES ($2, $3, $4, $5, $6, $7, $8, $9, $10);
-                    // )`
-                    db.query(sql, [category, difficulty, question, correctAnswer, answer1, answer2, answer3, correctAnswer]).then(() => {
-                    })
-                })
-            })
-    }
 })
+function getTriviaAPIURL(userCategory) {
+    if (userCategory == "Random") {
+        return "https://the-trivia-api.com/api/questions?limit=10"
+    }
+    else {
+        return `https://the-trivia-api.com/api/questions?limit=10&categories=${userCategory}`
+
+    }
+}
+function getQuizQestions(quizID, res, userCategory) {
+    const url = getTriviaAPIURL(userCategory)
+    // If user selects category calls API with specific category 
+    axios.get(url)
+        .then(function (response) {
+            let promises = []
+            const APIResponse = response.data
+            APIResponse.forEach(element => {
+                const { category, difficulty, question, correctAnswer, incorrectAnswers } = element
+                const [answer1, answer2, answer3] = incorrectAnswers
+                const sql = `
+            INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3,answer4,correct_answer, quiz_id)
+            VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`
+
+
+                const promise = db.query(sql, [category, difficulty, question, answer1, answer2, answer3, correctAnswer, correctAnswer, quizID])
+                promises.push(promise)
+            })
+            Promise.all(promises).then(function(){
+                res.json({})
+            })
+        })
+
+}
 
 app.get("/api/quiz", (req, res) => {
     // console.log("app trivia endpoint hit")
