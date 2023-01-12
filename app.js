@@ -1,8 +1,10 @@
+require("dotenv").config()
 const express = require("express");
 const db = require("./db/db.js");
 const bodyParser = require('body-parser');
 const axios = require('axios').default;
 const bcrypt = require('bcrypt')
+const expressSession = require("express-session")
 
 
 const app = express();
@@ -10,7 +12,20 @@ const app = express();
 app.use(express.static("static"));
 app.use(bodyParser.json());
 
-const PORT = 3000;
+
+const port = process.env.PORT;
+const pgSession = require("connect-pg-simple")(expressSession)
+
+app.use(expressSession({
+    store: new pgSession ({
+        pool: db,
+        createTableIfMissing: true,
+    }),
+    secret: process.env.SECRET,
+
+}))
+
+
 
 app.get("/api/hello", (req, res) => {
     res.json({ message: "hello" })
@@ -76,40 +91,78 @@ app.get("/api/quiz/:id", (req, res)=> {
 app.post('/users', (req, res) => {
   
     let { name, email, password_hash} = req.body
+   
+    console.log(req.session.name)
     console.log(name,email,password_hash)
     const generateHash = bcrypt.hashSync(password_hash, bcrypt.genSaltSync(10),null)
 
     const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);';
+    
     db.query(sql, [name,email,generateHash])
     .then(()=> 
     res.json({"status": "kinda-ok"}));
+    
+    
 
 })
 
-app.post("/users/login", (req, res) =>{
-    let { email, password_hash } = req.body
-
-    const sql = 'SELECT id,email,password FROM users WHERE email=$1 AND password=$2';
-    db.query(sql, [email,password_hash])
+app.post("/users/login", async(req, res) =>{
+    let { email,password_hash } = req.body
+    
+        
+    const sql = 'SELECT id,password FROM users WHERE email=$1';
+    db.query(sql, [email])
     .then((queryResult)=> {
         console.log(queryResult.rows)
         
         if(queryResult.rows.length == 0){
             
-            res.json({"status": "noUsers"})
+            res.json({"status": "No Email Found"})
         } else {
             const userRow = queryResult.rows[0]
-            res.json({"status": "verifiedUser"})
+            // console.log(userRow)
+            // console.log(userRow.password)
+            bcrypt.compare(password_hash, userRow.password , function(err, result) {
+                if (result) {
+                    req.session.id = userRow.id
+                    console.log(req.session.id)
+                    console.log("killme")
+                    res.json({"status": "correct login mate"})
+
+                } else {
+                    res.json({"status": "wrong password mate"})
+                }
+                });
+            
             //TO DO, STORE USER SESSION HERE
         }
 
+   
+        });
+    
+    
 
+})
+
+app.get("/users/session", (req, res) =>{
+    let { email, password_hash } = req.body
+
+    const sql = 'SELECT id,name FROM users WHERE email=$1';
+    db.query(sql, [email])
+    .then((queryResult)=> {
+        console.log(queryResult.rows)
+       
         
         });
     
     
 
 })
+
+
+
+
+
 
 
 app.post("/api/trivia_answer", (req, res)=> {
@@ -136,8 +189,8 @@ app.get("/api/trivia_answer", (req, res)=> {
 
 
 
-app.listen(PORT, function () {
-    console.log("Listening at http://localhost:3000");
+app.listen(port, function () {
+    console.log(`Listening at http://localhost:${port}`);
 });
 
 
