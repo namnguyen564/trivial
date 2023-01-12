@@ -115,28 +115,31 @@ app.post('/users', (req, res) => {
     console.log(name, email, password_hash)
     const generateHash = bcrypt.hashSync(password_hash, bcrypt.genSaltSync(10), null)
 
-    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);';
+    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);'
 
-    db.query(sql, [name, email, generateHash])
-        .then(() =>
+    db.query(sql, [name, email, generateHash]).then(() =>
             res.json({ "status": "kinda-ok" }));
+                
+    })
+   
+   
 
 
-
-})
 
 app.post("/users/login", async (req, res) => {
     let { email, password_hash } = req.body
 
 
-    const sql = 'SELECT id,password FROM users WHERE email=$1';
+    const sql = 'SELECT id,name,password,email FROM users WHERE email=$1';
     db.query(sql, [email])
         .then((queryResult) => {
             console.log(queryResult.rows)
 
             if (queryResult.rows.length == 0) {
+                res.status(404).json({
+                    message: `No Email Found`
+                })
 
-                res.json({ "status": "No Email Found" })
             } else {
                 const userRow = queryResult.rows[0]
                 // console.log(userRow)
@@ -144,23 +147,28 @@ app.post("/users/login", async (req, res) => {
                 bcrypt.compare(password_hash, userRow.password, function (err, result) {
                     if (result) {
                         req.session.userId = userRow.id
+                        req.session.userName = userRow.name
+                        req.session.userEmail = userRow.email
                         console.log(req.session.userId)
                         console.log("killme")
-                        res.json({ "status": "correct login mate" })
+                        res.status(200).json({
+                            message: `Correct Login`
+                        })
 
                     } else {
-                        res.json({ "status": "wrong password mate" })
+                        res.status(404).json({
+                            message: `No Email Found`
+                        })
                     }
-                });
 
-                //TO DO, STORE USER SESSION HERE
+                })
+                    .catch((err) => {
+                        res.status(500).json({
+                            message: 'server error'
+                        })
+                    })
             }
-
-
         });
-
-
-
 })
 
 app.get("/users/session", (req, res) => {
