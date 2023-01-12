@@ -38,7 +38,7 @@ export function renderSignUpPage() {
             // res.status(400).json({
             //     message: `Missing Input`
             // })
-        } else if (data.name.length > 15 || data.email.length > 25 || data.password_hash.length > 15) {
+        } else if (data.name.length > 15 || data.email.length > 30 || data.password_hash.length > 15) {
             errorMsg.innerText = "Too Many Characters!"
             // res.status(400).json({
 
@@ -51,8 +51,13 @@ export function renderSignUpPage() {
                 .post("/users",data)
                 .then((response) => {
                     console.log(response)
+                    .post("users/sessions", data)
+                    .then((userResponse) => {
+                        console.log(userResponse)
+                    })
                     // rederNav()
                 })
+            
 
         }
     })
