@@ -1,4 +1,6 @@
-// import{rederNav} from './components/renderNavBar.js'
+import{rederNav} from './renderNavBar.js'
+
+import { renderLoginPage } from "./renderLoginPage.js";
 
 export function renderSignUpPage() {
     const header = document.getElementById("header-nav");
@@ -50,12 +52,10 @@ export function renderSignUpPage() {
             axios
                 .post("/users",data)
                 .then((response) => {
-                    console.log(response)
-                    .post("users/sessions", data)
-                    .then((userResponse) => {
-                        console.log(userResponse)
-                    })
-                    // rederNav()
+                    loggedIn()
+                    
+                    renderLoginPage()
+                    rederNav()
                 })
             
 
@@ -66,3 +66,8 @@ export function renderSignUpPage() {
 
 
 }
+
+function loggedIn(){
+    window.localStorage.setItem("logged_in",true)
+}
+
