@@ -104,7 +104,7 @@ html {
     display: none;
   }
 
-  #start-button,  #question-container button {
+  li button,  #question-container button {
     padding: 7px;
     border: none;
     border-radius: 5px;
@@ -197,9 +197,20 @@ html {
 
 table, th, td {
   border:1px solid black;
-  padding: 3px;
+  border-radius: 5px;
+  padding: 7px;
 }
 table {
   text-align: center;
   margin: auto;
+}
+th {
+    padding: 7px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    background-image: linear-gradient(45deg, #4568dc, #b06ab3);
+    cursor: pointer;
+    outline: none;
 }

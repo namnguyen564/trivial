@@ -51,18 +51,13 @@ app.get("/api/trivia", (req, res) => {
                 const sql = `
 
             INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3,answer4, correct_answer, quiz_id)
-            VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`
-                db.query(sql, [category, difficulty, question, answer1, answer2, answer3,correctAnswer, correctAnswer, quizID]).then(() => {
-
-            INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3, correct_answer)
-            VALUES($1,$2,$3,$4,$5,$6,$7);`
-            
-                db.query(sql, [category, difficulty, question, correctAnswer, answer1, answer2, answer3, correctAnswer]).then(() => {
-
-                })
+            VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9);`
+                db.query(sql, [category, difficulty, question, answer1, answer2, answer3,correctAnswer, correctAnswer, quizID]).then(() => { res.status(200)})
+            }
+)
             })
             // once new quiz loaded into db, response 200 
-            res.status(200)})
+           
 }
 // If user selects category calls API with specific category 
 else if (userCategory !== "Random"){
@@ -74,25 +69,14 @@ else if (userCategory !== "Random"){
                 const [answer1, answer2, answer3] = incorrectAnswers
                 const sql = `
             INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3,answer4,correct_answer, quiz_id)
-            VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`
+            VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9);`
                 db.query(sql, [category, difficulty, question, answer1, answer2, answer3,correctAnswer, correctAnswer, quizID]).then(() => {
-=======
-            const sql = `
-            INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3, correct_answer)
-            VALUES($1,$2,$3,$4,$5,$6,$7)`
-            // const sql = `WITH first_insert AS (
-            //     INSERT INTO quizes(name)
-            //     VALUES ($1)
-            //     RETURNING id as quiz_id) 
-            //     INSERT INTO questions (category, difficulty, question, answer1, answer2, answer3, answer4, correct_answer, quiz_id)
-            //     VALUES ($2, $3, $4, $5, $6, $7, $8, $9, $10);
-            // )`
-                db.query(sql, [category, difficulty, question, correctAnswer, answer1, answer2, answer3, correctAnswer]).then(() => {
-                })
+
+               
             })
         })
-}})
-
+})}
+})
 app.get("/api/quiz", (req, res)=> {
     // console.log("app trivia endpoint hit")
     const sql = 'SELECT * FROM quizes;'

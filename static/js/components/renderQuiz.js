@@ -15,7 +15,7 @@ export function renderQuiz(id) {
     // }
     // renderedQuizes.push(id)
     event.stopPropagation();
-    // console.log("rendering quiz id", id)
+    console.log("rendering quiz id", id)
     // const quiz = document.getElementById(`quiz-${id}`);
     const page = document.getElementById('page');
 
