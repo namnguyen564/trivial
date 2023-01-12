@@ -107,16 +107,14 @@ app.post('/users', (req, res) => {
     console.log(name, email, password_hash)
     const generateHash = bcrypt.hashSync(password_hash, bcrypt.genSaltSync(10), null)
 
-    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);';
+    const sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3);'
 
-    db.query(sql, [name, email, generateHash])
-        .then(() =>
+    db.query(sql, [name, email, generateHash]).then(() =>
             res.json({ "status": "kinda-ok" }));
+                
     })
-    
-    
-    
-
+   
+   
 
 
 
