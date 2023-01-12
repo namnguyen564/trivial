@@ -134,8 +134,8 @@ app.post("/users/login", async(req, res) =>{
             // console.log(userRow.password)
             bcrypt.compare(password_hash, userRow.password , function(err, result) {
                 if (result) {
-                    req.session.id = userRow.id
-                    console.log(req.session.id)
+                    req.session.userId = userRow.id
+                    console.log(req.session.userId)
                     console.log("killme")
                     res.json({"status": "correct login mate"})
 
