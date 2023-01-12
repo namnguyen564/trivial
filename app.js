@@ -4,11 +4,14 @@ const db = require("./db/db.js");
 const bodyParser = require('body-parser');
 const { response } = require("express");
 const axios = require('axios').default;
+
 const bcrypt = require('bcrypt')
 const expressSession = require("express-session")
 
 
+
 const app = express();
+
 
 app.use(express.static("static"));
 app.use(bodyParser.json());
@@ -37,24 +40,44 @@ app.get("/api/trivia", (req, res) => {
     const userCategory = req.query["category"]
     console.log(quizName)
     console.log(userCategory)
+    // adds quiz name in quizes table 
+    const sqlName = `
+    INSERT INTO quizes(name)
+    VALUES($1)
+    RETURNING id
+    ;
+    `
+    let quizID = db.query(sqlName, [quizName]).then(function(event){
+        quizID = event.rows[0].id
+    })
 
     // Checks if user entered random category and adds 10 random questions to the db 
     if(userCategory == "Random"){
     axios.get("https://the-trivia-api.com/api/questions?limit=10")
         .then(function (response) {
             const APIResponse = response.data
+            // console.log(quizID)
+
+
             APIResponse.forEach(element => {
                 const { category, difficulty, question, correctAnswer, incorrectAnswers } = element
                 const [answer1, answer2, answer3] = incorrectAnswers
                 
                 const sql = `
+
+            INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3,answer4, correct_answer, quiz_id)
+            VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`
+                db.query(sql, [category, difficulty, question, answer1, answer2, answer3,correctAnswer, correctAnswer, quizID]).then(() => {
+
             INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3, correct_answer)
             VALUES($1,$2,$3,$4,$5,$6,$7);`
             
                 db.query(sql, [category, difficulty, question, correctAnswer, answer1, answer2, answer3, correctAnswer]).then(() => {
+
                 })
             })
-        })
+            // once new quiz loaded into db, response 200 
+            res.status(200)})
 }
 // If user selects category calls API with specific category 
 else if (userCategory !== "Random"){
@@ -64,6 +87,11 @@ else if (userCategory !== "Random"){
             APIResponse.forEach(element => {
                 const { category, difficulty, question, correctAnswer, incorrectAnswers } = element
                 const [answer1, answer2, answer3] = incorrectAnswers
+                const sql = `
+            INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3,answer4,correct_answer, quiz_id)
+            VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`
+                db.query(sql, [category, difficulty, question, answer1, answer2, answer3,correctAnswer, correctAnswer, quizID]).then(() => {
+=======
             const sql = `
             INSERT INTO questions(category, difficulty, question, answer1, answer2, answer3, correct_answer)
             VALUES($1,$2,$3,$4,$5,$6,$7)`

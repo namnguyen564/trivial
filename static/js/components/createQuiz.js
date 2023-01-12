@@ -1,3 +1,5 @@
+import { renderQuizList } from "./renderQuizList.js"
+
 export function renderNewQuizForm() {
     const page = document.getElementById('page')
     page.replaceChildren()
@@ -19,12 +21,15 @@ export function renderNewQuizForm() {
         <option value="Food & Drink">Food & Drink</option>
         <option value="Arts & Literature">Arts & Literature </option>
         <option value="Random">Random</option>
-            <input type="submit" value="submit">
+        <input type="submit" value="submit">
+            
     </select>
 
 </form>
     
     `
+
 page.innerHTML=quizForm
+// addEventListener('submit', renderQuizList)
 
 }
