@@ -6,6 +6,7 @@ import { renderQuiz } from "./renderQuiz.js";
 export function renderQuizList() {
     const page = document.getElementById('page');
     page.replaceChildren()
+    // event.preventDefault()
     // console.log("rendering quiz list")
     // if (hasRendered === true) {
     //     console.log("render quiz disabled")

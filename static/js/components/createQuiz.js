@@ -1,11 +1,13 @@
+import { renderQuizList } from "./renderQuizList.js"
+
 export function renderNewQuizForm() {
     const page = document.getElementById('page')
     page.replaceChildren()
 
     const quizForm = `
-    <form action="/api/trivia/" method="get">
+    <form id="CreateQuizForm">
     <label for="Quiz Name">Quiz Name</label>
-    <input type="text" name="Quiz Name" id="Quiz Name">
+    <input type="text" name="Quiz Name" id="quizName">
     <label for="category">Pick a category</label>
     <select name="category" id="category">
         <option value="General Knowledge">General Knowledge</option>
@@ -19,12 +21,24 @@ export function renderNewQuizForm() {
         <option value="Food & Drink">Food & Drink</option>
         <option value="Arts & Literature">Arts & Literature </option>
         <option value="Random">Random</option>
-            <input type="submit" value="submit">
+        <input type="submit" value="submit">
+            
     </select>
 
 </form>
     
     `
-page.innerHTML=quizForm
 
+page.innerHTML=quizForm
+// addEventListener('submit', renderQuizList)
+const form = document.getElementById("CreateQuizForm")
+form.addEventListener('submit', function(event){
+    event.preventDefault()
+    const category = document.getElementById("category").value
+    const quizName = document.getElementById("quizName").value
+    const data = {category,quizName}
+    axios.post("/api/trivia", data).then(function(){
+        renderQuizList()
+    })
+})
 }
