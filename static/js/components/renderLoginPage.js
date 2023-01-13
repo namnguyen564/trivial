@@ -4,7 +4,7 @@ import { verifyLogin } from './verifyLogin.js'
 export function renderLoginPage() {
     const header = document.getElementById("header-nav");
     header.innerHTML = `
-    <h1 id='title'>TRIVIAL</h1>
+    <h1 id='title' class="text-style-underline">TRIVIAL</h1>
     `
     if (!isLoggedIn()){
         header.innerHTML = `

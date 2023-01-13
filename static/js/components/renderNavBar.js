@@ -6,9 +6,9 @@ export function rederNav() {
     const navBar = document.createElement('ul');
     navBar.id = 'navList';
     navBar.innerHTML = `
-    <li class="nav-item" id="new-quiz-button">New Quiz</li>
-    <li class="nav-item" id="quiz-list-button">Quizes</li>
-    <li class="nav-item" id="leaderboard-button">Leader Board</li>
+    <li class="nav-item text-style-underline" id="new-quiz-button">New Quiz</li>
+    <li class="nav-item text-style-underline" id="quiz-list-button">Quizes</li>
+    <li class="nav-item text-style-underline" id="leaderboard-button">Leader Board</li>
     `;
 
     // document.getElementById('header-nav').replaceChildren(navBar);
