@@ -136,47 +136,56 @@ app.post('/users', (req, res) => {
 app.post("/users/login", (req, res) => {
     let { email, password_hash } = req.body
 
-
     const sql = 'SELECT id,name,password,email FROM users WHERE email=$1';
     db.query(sql, [email])
         .then((queryResult) => {
+   
             console.log(queryResult.rows)
-
+          
             if (queryResult.rows.length == 0) {
-                res.status(404).json({
-                    message: `No Email Found`
-                })
+                res.json({ "status": "Incorrect Email or Password" })
 
             } else {
                 const userRow = queryResult.rows[0]
                 // console.log(userRow)
                 // console.log(userRow.password)
                 bcrypt.compare(password_hash, userRow.password, function (err, result) {
+                    console.log(result)
+                    // if(err){
+                    //     console.log("why is this happening")
+                    //     res.json({ "status": "Incorrect Password or Email" })
+                    // }
                     if (result) {
                         req.session.userId = userRow.id
                         req.session.userName = userRow.name
                         req.session.userEmail = userRow.email
                         console.log(req.session.userId)
                         console.log("killme")
-                        res.status(200).json({
-                            message: `Correct Login`
-                        })
+                        // res.json({ "status": "correct" })    
+                        console.log("correct login")
+                        // res.json({ "status": "Correct Login" })
+                        res.json({ "status": "Correct Login" })
+                    
 
-                    } else {
-                        res.status(404).json({
-                            message: `Cannot Log In`
-                        })
+                    } else if (!result) {
+                        console.log("why is this happening")
+                        res.json({ "status": "Incorrect Email or Password" })
+                        // res.status(400).send({
+                        //     message: false
+                        // })
                     }
 
                 })
-                    .catch(() => {
-                        res.status(500).json({
-                            message: 'server error'
-                        })
-                    })
+                    // .catch((err) => {
+                    //     console.log(err)
+                    //     res.status(500).send({
+                    //         message: 'server error'
+                    //     })
+                    // })
             }
         });
 })
+
 
 app.get("/users/deleteSession", (req, res) => {
     
