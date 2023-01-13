@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+#logOutButton{
+    font-weight: bold;
+    font-family: system-ui, sans-serif;
+    border: 5em;
+height:44px;
+cursor: pointer;
+outline: none;
+font-size: 16px;
+-webkit-transform: translate(0);
+transform: translate(0);
+background-color: rgb(183, 169, 252);
+padding: 0.7em 2em;
+border-radius: 1px;
+box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.438);
+-webkit-transition: box-shadow 0.25s;
+transition: box-shadow 0.25s;
+color: rgb(86, 86, 86);
+text-align: right;
+position:relative;
+float:right;
+right: 30px;
+bottom: 160px;
+    /* padding: 7px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    background-color: rgb(183, 169, 252);
+    color: rgb(55, 55, 55);
+    cursor: pointer;
+    outline: none;
+    justify-content: right; */
+}
+
+.startQuizButton{
+    
+}
+
+

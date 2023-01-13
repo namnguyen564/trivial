@@ -3,6 +3,7 @@ import{loggedIn} from './userStatus.js'
 import { renderLoginPage } from "./renderLoginPage.js";
 
 export function verifyLogin(){
+    const middle = document.getElementById("middle-nav");
     console.log("kms")
     const loginForm = document.getElementById("login-form")
     const errorMsg = document.getElementById("error-msg");

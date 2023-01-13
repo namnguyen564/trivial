@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
 /* #title{
@@ -18,11 +19,13 @@
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  color: #e1f89c;
 }
 
 /* animation class for fat underline with gradient */
 .text-style-underline{
-  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  /* background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12); */
+  /* background-color: #e1f89c; */
   background-size: 0% 40px;
   background-repeat: no-repeat;
   background-position: left bottom;
@@ -32,16 +35,21 @@
   background-size: 100% 40px;
 }
 
+#header-nav{
+  background-color: rgb(98, 190, 158);
+  width: 100%;
+ 
 
+}
 
 html {
     height: 100%;
-    background-color: blanchedalmond;
+    background-color: rgb(137, 188, 170);
   }
   
   body {
     /* height: 100%; */
-    margin: 0;
+    /* margin: 0; */
     font-family: Arial, Helvetica, sans-serif;
     display: grid;
     justify-items: center;
@@ -50,86 +58,13 @@ html {
   }
   
 
-  
-  #login-form {
-    align-self: flex-start;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-  }
 
-  
-  .login-form-field::placeholder {
-    color: #3a3a3a;
-  }
-  
-  .login-form-field {
-    border: none;
-    width:200px;
-    border-bottom: 1px solid #e87979;
-    margin-bottom: 10px;
-    border-radius: 3px;
-    outline: none;
-    padding: 0px 0px 5px 5px;
-  }
-/*   
-  #login-form-submit{
-    width: 100%;
-    padding: 7px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    background-image: linear-gradient(45deg, #4568dc, #b06ab3);
-    cursor: pointer;
-    outline: none;
-  } */
-
-  .bn33 {
-    border: 5em;
-    height:44px;
-    cursor: pointer;
-    outline: none;
-    font-size: 16px;
-    -webkit-transform: translate(0);
-    transform: translate(0);
-    background-image: linear-gradient(45deg, #4568dc, #b06ab3);
-    padding: 0.7em 2em;
-    border-radius: 1px;
-    box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.438);
-    -webkit-transition: box-shadow 0.25s;
-    transition: box-shadow 0.25s;
-    color: white;
-  }
-
-    
-  #login-form {
-    align-self: flex-start;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-  }
-
-
-
-  #test-form-submit{
-    width: 100%;
-    padding: 7px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
-    cursor: pointer;
-    outline: none;
-  
-  }
 
 #question-container  .question {
     display: none;
   }
 
-li button,  #question-container button, submit, #createQuizSubmit {
+  #question-container button, submit {
     padding: 7px;
     border: none;
     border-radius: 5px;
@@ -157,17 +92,19 @@ li button,  #question-container button, submit, #createQuizSubmit {
 
 
 #navList {
+  font-size: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   width: 400px;
   margin-left: auto;
   margin-right: auto;
-  border: solid black;
+  /* border: solid black; */
   color: white;
   padding: 20px;
-  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  background-color: rgb(62, 176, 207);
   border-radius: 10px;
+  
 
 }
 #navList li{
@@ -254,9 +191,13 @@ table {
 #CreateQuizForm {
   display: block;
   width: 440px;
+  color:rgb(49, 48, 48);
   /* border: solid black; */
   margin-left: auto;
   margin-right: auto;
+  font-family: system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 800;
 
 }
 #quizName, #category {
@@ -269,8 +210,26 @@ table {
   margin-bottom: 16px; 
 }
 
-/* #createQuizSubmit{
-  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)
-} */
+#createQuizSubmit{
+  padding: 7px;
+    border: none;
+    border-radius: 5px;
+    color: rgb(69, 69, 69);
+    font-weight: bold;
+    background-color: rgb(250, 177, 177);
+    cursor: pointer;
+    outline: none;
+}
 
+li button {
+  padding: 7px;
+  border: none;
+  border-radius: 5px;
+  color: rgb(69, 69, 69);
+  font-weight: bold;
+  
+  cursor: pointer;
+  outline: none;
+  background-color: rgb(250, 177, 177);
+}
 

@@ -1,28 +1,33 @@
 import{rederNav} from './renderNavBar.js'
 import{loggedIn} from './userStatus.js'
-
-
 import { renderLoginPage } from "./renderLoginPage.js";
 
 export function renderSignUpPage() {
     const header = document.getElementById("header-nav");
     const errorMsg = document.getElementById("error-msg")
+    const middle = document.getElementById("middle-nav");
 
-    header.innerHTML = `
-    <h1>Sign Up Page</h1>
+    errorMsg.innerText = ''
 
-    `
+    // header.innerHTML = `
+    // <h1>Sign Up Page</h1>
+
+    // `
+    middle.innerHTML=''
+
     const signUpForm = document.createElement("form")
+    signUpForm.setAttribute("id", "signUpFormId")
     signUpForm.innerHTML = `
-    
-    <input type="text" id="name" name="name" placeholder="Name">
-    <input type="text" id="email" name="email" placeholder="Email">
-    <input type="password" id="password" name="password" placeholder="Password">
-    <input type="submit" value="Sign Up" id="sign-up-form-submit">
+    <div id="loginContainer2">
+    <input type="text" id="name" name="name" placeholder="Name" class="login-form-field2">
+    <input type="text" id="email" name="email" placeholder="Email" class="login-form-field2">
+    <input type="password" id="password" name="password" placeholder="Password" class="login-form-field2">
+    <input type="submit" value="Sign Up"  id="signUpButton2">
+    <div>
     `
 
     // signUpForm.setAttribute("method", "POST")
-    header.appendChild(signUpForm)
+    middle.appendChild(signUpForm)
 
     signUpForm.addEventListener("submit", function (event) {
         event.preventDefault();

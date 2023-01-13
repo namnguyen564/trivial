@@ -21,7 +21,7 @@ export function renderNewQuizForm() {
         <option value="Food & Drink">Food & Drink</option>
         <option value="Arts & Literature">Arts & Literature </option>
         <option value="Random">Random</option>
-        <input type="submit" value="submit" id="createQuizSubmit">
+        <input type="submit" value="Submit" id="createQuizSubmit">
             
     </select>
 

@@ -185,6 +185,7 @@ app.post("/users/login", (req, res) => {
 app.get("/users/guestLogin", (req, res) => {
   const sql = "SELECT * FROM users WHERE id=1;";
 
+
   db.query(sql).then((result) => {
     req.session.userId = result.id;
     req.session.userName = result.name;
