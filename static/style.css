@@ -8,6 +8,7 @@
     padding-top: 40px;   
 }  */
 
+/* Hover effect used from https://codepen.io/noahraskin/pen/abENVwL */
 #title {
   --s: 0.1em;   /* the thickness of the line */
   --c: #004d7a; /* the color */
@@ -125,7 +126,7 @@ html {
     display: none;
   }
 
-li button,  #question-container button, submit {
+li button,  #question-container button, submit, #createQuizSubmit {
     padding: 7px;
     border: none;
     border-radius: 5px;
@@ -240,8 +241,24 @@ table {
 
 #CreateQuizForm {
   display: block;
+  width: 440px;
+  /* border: solid black; */
+  margin-left: auto;
+  margin-right: auto;
+
+}
+#quizName, #category {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+  box-sizing: border-box; 
+  margin-top: 6px; 
+  margin-bottom: 16px; 
 }
 
-.nav-item{
+/* #createQuizSubmit{
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)
+} */
 
-}
+
