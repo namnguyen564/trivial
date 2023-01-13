@@ -1,12 +1,11 @@
 import{rederNav} from './renderNavBar.js'
 import{loggedIn} from './userStatus.js'
-
-
 import { renderLoginPage } from "./renderLoginPage.js";
 
 export function renderSignUpPage() {
     const header = document.getElementById("header-nav");
     const errorMsg = document.getElementById("error-msg")
+    errorMsg.innerText = ''
 
     header.innerHTML = `
     <h1>Sign Up Page</h1>
