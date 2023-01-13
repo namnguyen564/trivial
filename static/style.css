@@ -20,16 +20,18 @@
   margin-right: auto;
 }
 
+/* animation class for fat underline with gradient */
 .text-style-underline{
   background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
   background-size: 0% 40px;
   background-repeat: no-repeat;
   background-position: left bottom;
-  transition: background-size 500ms ease-in-out;
+  transition: background-size 800ms ease-in-out;
 }
 .text-style-underline:hover{
   background-size: 100% 40px;
 }
+
 
 
 html {
@@ -152,9 +154,7 @@ li button,  #question-container button, submit, #createQuizSubmit {
     margin: auto;
     /* padding: 7px; */
   }
-#header-nav {
-  width: 100%;
-}
+
 
 #navList {
   display: flex;
@@ -173,6 +173,17 @@ li button,  #question-container button, submit, #createQuizSubmit {
 #navList li{
   list-style: none;
   cursor: pointer;
+}
+/* Styling for the individual quizes under the quizes list  */
+.quizItem{
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  justify-content: space-between;
+  align-items: center;
+  /* border: solid black; */
+  padding: 20px;
+  margin: 0 auto;
 }
 
 /* The Modal (background) */
