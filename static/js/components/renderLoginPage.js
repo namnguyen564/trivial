@@ -1,11 +1,21 @@
 import { renderSignUpPage } from './renderSignUpPage.js'
 import { verifyLogin } from './verifyLogin.js'
+import { loggedOut } from './userStatus.js'
 
 export function renderLoginPage() {
     const header = document.getElementById("header-nav");
-    header.innerHTML = `
-    <h1 id='title'>TRIVIAL</h1>
-    `
+    if(isLoggedIn){
+        header.innerHTML = `
+        <h1 id='title'>TRIVIAL</h1>
+        <input type="submit" value="Log Out" id="logOutButton">
+        `
+        document.getElementById('logOutButton').addEventListener('click', loggedOut)
+    }
+    // header.innerHTML = `
+    // <h1 id='title'>TRIVIAL</h1>
+    // <input type="submit" value="Log Out" id="logOutButton">
+    // `
+
     if (!isLoggedIn()){
         header.innerHTML = `
        <h1 id='title'>TRIVIAL</h1>
@@ -18,8 +28,11 @@ export function renderLoginPage() {
        <input type="submit" value="Sign Up" id="signUpButton">
        <input type="submit" value="Guest Login" >
       `;
-      document.getElementById('signUpButton').addEventListener('click', renderSignUpPage)
+
+
+    document.getElementById('signUpButton').addEventListener('click', renderSignUpPage)
     document.getElementById('login-form-submit').addEventListener('click', verifyLogin)
+    
 
 
     }

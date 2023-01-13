@@ -127,7 +127,6 @@ app.post('/users', (req, res) => {
         console.log(req.session.userId)
         res.json({ "status": "kinda-ok" })
     });
-                
 })
    
    
@@ -170,7 +169,7 @@ app.post("/users/login", (req, res) => {
                     }
 
                 })
-                    .catch((err) => {
+                    .catch(() => {
                         res.status(500).json({
                             message: 'server error'
                         })
@@ -179,17 +178,10 @@ app.post("/users/login", (req, res) => {
         });
 })
 
-app.get("/users/session", (req, res) => {
-    let { email, password_hash } = req.body
-
-    const sql = 'SELECT id,name FROM users WHERE email=$1';
-    db.query(sql, [email])
-        .then((queryResult) => {
-            console.log(queryResult.rows)
-
-
-        });
-
+app.get("/users/deleteSession", (req, res) => {
+    
+    req.session.destroy
+    return res.status(200).send()
 
 
 })
