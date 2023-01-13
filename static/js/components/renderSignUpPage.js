@@ -54,6 +54,7 @@ export function renderSignUpPage() {
             axios
                 .post("/users",data)
                 .then((response) => {
+                    console.log(response)
                     loggedIn()
                     renderLoginPage()
                     rederNav()
