@@ -1,4 +1,6 @@
 import{rederNav} from './renderNavBar.js'
+import{loggedIn} from './userStatus.js'
+
 
 import { renderLoginPage } from "./renderLoginPage.js";
 
@@ -52,8 +54,8 @@ export function renderSignUpPage() {
             axios
                 .post("/users",data)
                 .then((response) => {
+                    console.log(response)
                     loggedIn()
-                    
                     renderLoginPage()
                     rederNav()
                 })
@@ -67,7 +69,13 @@ export function renderSignUpPage() {
 
 }
 
-function loggedIn(){
-    window.localStorage.setItem("logged_in",true)
-}
+// function loggedIn(){
+//     window.localStorage.setItem("logged_in",true)
+// }
+
+// function loggedOut(){
+//     window.localStorage.setItem("logged_in",false)
+// }
+
+
 
