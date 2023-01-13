@@ -24,6 +24,7 @@ export function renderQuizList() {
            
            for (let item of listItems) {
             const quiz = document.createElement('li');
+            quiz.className = `quizItem`
             quiz.id = `quiz-${item.id}`;
             quiz.innerHTML = `
                 ${item.name} <button id="start-button-${item.id}">Start Quiz</button>

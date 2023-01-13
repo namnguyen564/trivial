@@ -1,12 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
-#title{
-    text-align: center;
+/* #title{
+     text-align: center;
     font-family: 'Righteous', cursive;
     font-size: 80px;
   
-    padding-top: 40px;
-} 
+    padding-top: 40px;   
+}  */
+
+/* Hover effect used from https://codepen.io/noahraskin/pen/abENVwL */
+
+#title {
+  font-family: system-ui, sans-serif;
+  font-size: 5rem;
+  cursor: pointer;
+  text-align: center;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* animation class for fat underline with gradient */
+.text-style-underline{
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  background-size: 0% 40px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 800ms ease-in-out;
+}
+.text-style-underline:hover{
+  background-size: 100% 40px;
+}
+
 
 
 html {
@@ -104,7 +129,7 @@ html {
     display: none;
   }
 
-li button,  #question-container button {
+li button,  #question-container button, submit, #createQuizSubmit {
     padding: 7px;
     border: none;
     border-radius: 5px;
@@ -129,17 +154,36 @@ li button,  #question-container button {
     margin: auto;
     /* padding: 7px; */
   }
-#header-nav {
-  width: 100%;
-}
+
 
 #navList {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid black;
+  color: white;
+  padding: 20px;
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  border-radius: 10px;
+
 }
 #navList li{
   list-style: none;
+  cursor: pointer;
+}
+/* Styling for the individual quizes under the quizes list  */
+.quizItem{
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  justify-content: space-between;
+  align-items: center;
+  /* border: solid black; */
+  padding: 20px;
+  margin: 0 auto;
 }
 
 /* The Modal (background) */
@@ -206,3 +250,27 @@ table {
   text-align: center;
   margin: auto;
 }
+
+#CreateQuizForm {
+  display: block;
+  width: 440px;
+  /* border: solid black; */
+  margin-left: auto;
+  margin-right: auto;
+
+}
+#quizName, #category {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+  box-sizing: border-box; 
+  margin-top: 6px; 
+  margin-bottom: 16px; 
+}
+
+/* #createQuizSubmit{
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12)
+} */
+
+

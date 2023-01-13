@@ -4,6 +4,7 @@ import { loggedOut } from './userStatus.js'
 
 export function renderLoginPage() {
     const header = document.getElementById("header-nav");
+
     if(isLoggedIn){
         header.innerHTML = `
         <h1 id='title'>TRIVIAL</h1>
@@ -12,9 +13,10 @@ export function renderLoginPage() {
         document.getElementById('logOutButton').addEventListener('click', loggedOut)
     }
     // header.innerHTML = `
-    // <h1 id='title'>TRIVIAL</h1>
+    // <h1 id='title' class="text-style-underline>TRIVIAL</h1>
     // <input type="submit" value="Log Out" id="logOutButton">
     // `
+
 
     if (!isLoggedIn()){
         header.innerHTML = `
