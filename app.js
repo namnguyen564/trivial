@@ -197,7 +197,7 @@ app.get('/users/guestLogin', (req, res) => {
         req.session.userId = result.id
         req.session.userName = result.name
         req.session.userEmail = result.email
-        res.json(result.rows)
+        res.json(result.rows)   
     })
 })
     
