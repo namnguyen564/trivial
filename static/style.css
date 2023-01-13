@@ -1,12 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
-#title{
-    text-align: center;
+/* #title{
+     text-align: center;
     font-family: 'Righteous', cursive;
     font-size: 80px;
   
-    padding-top: 40px;
-} 
+    padding-top: 40px;   
+}  */
+
+#title {
+  --s: 0.1em;   /* the thickness of the line */
+  --c: #004d7a; /* the color */
+  
+  color: #0000;
+  padding-bottom: var(--s);
+  background: 
+    linear-gradient(90deg,var(--c) 50%,#000 0) calc(100% - var(--_p,0%))/200% 100%,
+    linear-gradient(var(--c) 0 0) 0% 100%/var(--_p,0%) var(--s) no-repeat;
+  -webkit-background-clip: text,padding-box;
+          background-clip: text,padding-box;
+  transition: 0.5s;
+}
+#title:hover {--_p: 100%}
+#title {
+  font-family: system-ui, sans-serif;
+  font-size: 5rem;
+  cursor: pointer;
+  text-align: center;
+}
 
 
 html {
@@ -104,7 +125,7 @@ html {
     display: none;
   }
 
-li button,  #question-container button {
+li button,  #question-container button, submit {
     padding: 7px;
     border: none;
     border-radius: 5px;
@@ -137,9 +158,19 @@ li button,  #question-container button {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid black;
+  color: white;
+  padding: 20px;
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  border-radius: 10px;
+
 }
 #navList li{
   list-style: none;
+  cursor: pointer;
 }
 
 /* The Modal (background) */
@@ -205,4 +236,12 @@ table, th, td {
 table {
   text-align: center;
   margin: auto;
+}
+
+#CreateQuizForm {
+  display: block;
+}
+
+.nav-item{
+
 }
