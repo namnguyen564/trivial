@@ -29,6 +29,7 @@ CREATE TABLE questions (
       REFERENCES quizes(id)
 );
 
+
 DROP TABLE IF EXISTS answers CASCADE;
 CREATE TABLE answers (
     id SERIAL PRIMARY KEY,

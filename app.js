@@ -187,6 +187,22 @@ app.post("/users/login", (req, res) => {
 })
 
 
+app.get('/users/guestLogin', (req, res) => {
+
+  
+    const sql = 'SELECT * FROM users WHERE id=1;'
+
+    db.query(sql).then((result) => {
+
+        req.session.userId = result.id
+        req.session.userName = result.name
+        req.session.userEmail = result.email
+        res.json(result.rows)
+    })
+})
+    
+   
+
 app.get("/users/deleteSession", (req, res) => {
     
     req.session.destroy
@@ -194,6 +210,7 @@ app.get("/users/deleteSession", (req, res) => {
 
 
 })
+
 
 
 
