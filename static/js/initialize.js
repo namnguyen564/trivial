@@ -4,5 +4,5 @@ import { renderNewQuizForm } from './components/createQuiz.js'
 
 // createQuiz()
 renderLoginPage()
-rederNav()
+// rederNav()
 
