@@ -1,6 +1,5 @@
-INSERT INTO users (name, email, password) VALUES ('Alex', 'alex@example.com', 'pass111');
-INSERT INTO users (name, email, password) VALUES ('Ivy', 'ivy@example.com', 'pass222');
-INSERT INTO users (name, email, password) VALUES ('Nam', 'nam@example.com', 'pass333');
+INSERT INTO users (name, email, password) VALUES ('Guest', 'guest@guest.com', '$2b$10$yPAJkmSXt2pUjiVJ5xjzQulRDeLGPtjQtGADkbiiBdunx.YB1Itve');
+
 
 INSERT INTO quizes (name) VALUES ('Random Trivia Set');
 

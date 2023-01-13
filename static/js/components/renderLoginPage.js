@@ -1,6 +1,7 @@
 import { renderSignUpPage } from './renderSignUpPage.js'
 import { verifyLogin } from './verifyLogin.js'
 import { loggedOut } from './userStatus.js'
+import { guestLogin } from './guestLogin.js'
 
 export function renderLoginPage() {
     const header = document.getElementById("header-nav");
@@ -28,12 +29,13 @@ export function renderLoginPage() {
        <input type="submit" value="Login" id="login-form-submit">
        </form>
        <input type="submit" value="Sign Up" id="signUpButton">
-       <input type="submit" value="Guest Login" >
+       <input type="submit" id="guestLoginButton" value="Guest Login" >
       `;
 
 
     document.getElementById('signUpButton').addEventListener('click', renderSignUpPage)
     document.getElementById('login-form-submit').addEventListener('click', verifyLogin)
+    document.getElementById('guestLoginButton').addEventListener('click', guestLogin)
     
 
 
