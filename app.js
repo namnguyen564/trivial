@@ -133,6 +133,7 @@ app.post("/users", (req, res) => {
   db.query(sql, [name, email, generateHash]).then((result, err) => {
     if (err) {
       res.status(400);
+      
     }
     console.log("response", result, err);
     const id = result.rows[0].id;

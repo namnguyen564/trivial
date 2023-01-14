@@ -10,7 +10,7 @@ export function guestLogin(){
         console.log(response)
         loggedIn()
         renderLoginPage()
-        rederNav()
+        
     
     })
 }

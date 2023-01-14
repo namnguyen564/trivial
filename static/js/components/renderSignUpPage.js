@@ -62,7 +62,7 @@ export function renderSignUpPage() {
                     console.log(response)
                     loggedIn()
                     renderLoginPage()
-                    rederNav()
+              
                 })
             
 
