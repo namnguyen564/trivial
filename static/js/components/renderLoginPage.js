@@ -2,6 +2,9 @@ import { renderSignUpPage } from './renderSignUpPage.js'
 import { verifyLogin } from './verifyLogin.js'
 import { loggedOut } from './userStatus.js'
 import { guestLogin } from './guestLogin.js'
+import{rederNav} from './renderNavBar.js'
+import{loggedIn} from './userStatus.js'
+
 
 export function renderLoginPage() {
     const header = document.getElementById("header-nav");
@@ -14,11 +17,22 @@ export function renderLoginPage() {
         <p1 id="description">SUPER FUN TRIVIA GAME!</p1>
         <input type="submit" value="Log Out" id="logOutButton">
         `   
+        
 
         middle.innerHTML =''
        
         errorMsg.innerHTML =  ''
+
+        // loggedIn()
+        rederNav()
+        
+                    
+  
+
         document.getElementById('logOutButton').addEventListener('click', loggedOut)
+
+
+        
     }
 
 
@@ -70,6 +84,7 @@ export function renderLoginPage() {
 }
 
 function isLoggedIn(){
-    return window.localStorage.getItem("logged_in") === "true"
+    return window.sessionStorage.getItem("logged_in") === "true"
 }
 
+console.log(isLoggedIn())
