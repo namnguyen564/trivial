@@ -58,11 +58,11 @@ export function renderQuiz(id) {
                         <form id="question-form-${index}" method="POST">
                         <input type="radio" id="answer1" name="answer" value="${question.answer1}" onchange="(event)=> event.preventPropagation();">
                         <label for="answer1">${question.answer1}</label><br>
-                        <input type="radio" id="answer2" name="answer" value="${question.answer2}" onchange="handleChange(event)">
+                        <input type="radio" id="answer2" name="answer" value="${question.answer2}" onchange="(event)=> event.preventPropagation();">
                         <label for="answer2">${question.answer2}</label><br>  
-                        <input type="radio" id="answer3" name="answer" value="${question.answer3}" onchange="handleChange(event)">
+                        <input type="radio" id="answer3" name="answer" value="${question.answer3}" onchange="(event)=> event.preventPropagation();">
                         <label for="answer3">${question.answer3}</label><br>
-                        <input type="radio" id="answer4" name="answer" value="${question.answer4}" onchange="handleChange(event)">
+                        <input type="radio" id="answer4" name="answer" value="${question.answer4}" onchange="(event)=> event.preventPropagation();">
                         <label for="answer3">${question.answer4}</label><br><br>
                         <button>Next</button>
                         </form>

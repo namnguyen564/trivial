@@ -109,6 +109,13 @@ app.get("/api/quiz/:id", (req, res) => {
   });
 });
 
+// app.delete("/api/quiz/:id", (req, res) => {
+//   const { id } = req.params;
+//   const sql =
+//     "DELETE FROM questions WHERE quiz_id=$1; DELETE FROM quizes WHERE id=$1;";
+//   db.query(sql, [id]).then(() => res.json({ status: "kinda-ok" }));
+// });
+
 app.post("/users", (req, res) => {
   let { name, email, password_hash } = req.body;
 
@@ -193,7 +200,6 @@ app.post("/users/login", (req, res) => {
 app.get("/users/guestLogin", (req, res) => {
   const sql = "SELECT * FROM users WHERE id=1;";
 
-
   db.query(sql).then((result) => {
     req.session.userId = result.id;
     req.session.userName = result.name;
@@ -241,7 +247,7 @@ app.get("/api/leaderboard", (req, res) => {
   // INNER JOIN Table3
   //     ON Condition;
   const sql =
-    "SELECT AVG(answers.score), users.name AS user, quizes.name AS quiz FROM answers INNER JOIN quizes ON answers.quiz_id = quizes.id INNER JOIN users ON answers.user_id = users.id GROUP BY users.id,quizes.id;";
+    "SELECT AVG(answers.score), users.name AS user, quizes.name AS quiz FROM answers INNER JOIN quizes ON answers.quiz_id = quizes.id INNER JOIN users ON answers.user_id = users.id GROUP BY users.id,quizes.id ORDER BY AVG(answers.score) DESC;";
   db.query(sql).then((response) => {
     res.json(response.rows);
   });
