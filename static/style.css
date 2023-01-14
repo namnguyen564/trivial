@@ -233,3 +233,9 @@ li button {
   background-color: rgb(250, 177, 177);
 }
 
+#error-msg{
+  font-weight: 650;
+  color: #222222;
+}
+
+

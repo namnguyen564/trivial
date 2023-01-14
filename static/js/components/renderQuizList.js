@@ -27,7 +27,7 @@ export function renderQuizList() {
             quiz.className = `quizItem`
             quiz.id = `quiz-${item.id}`;
             quiz.innerHTML = `
-                ${item.name} <button id="start-button-${item.id}">Start Quiz</button>
+                ${item.name} <button class="startQuizButton" id="start-button-${item.id}">Start Quiz</button>
             `;
             quizList.appendChild(quiz);
             document.getElementById(`start-button-${item.id}`).addEventListener('click', ()=>renderQuiz(item.id))
