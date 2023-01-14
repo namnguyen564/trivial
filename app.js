@@ -151,10 +151,10 @@ app.post("/users/login", (req, res) => {
     console.log(queryResult.rows);
 
     if (queryResult.rows.length == 0) {
-    //   res.json({ status: "Incorrect Email or Password" });
-        res.status(400).send({
-        status: "Incorrect Email or Password"
-    })
+      res.json({ status: "Incorrect Email or Password" });
+    //     res.status(400).send({
+    //     status: "Incorrect Email or Password"
+    // })
     } else {
       const userRow = queryResult.rows[0];
       // console.log(userRow)
@@ -177,10 +177,10 @@ app.post("/users/login", (req, res) => {
           res.json({ status: "Correct Login" });
         } else if (!result) {
           console.log("why is this happening");
-        //   res.json({ status: "Incorrect Email or Password" });
-          res.status(400).send({
-              status: "Incorrect Email or Password"
-          })
+          res.json({ status: "Incorrect Email or Password" });
+        //   res.status(400).send({
+        //       status: "Incorrect Email or Password"
+        //   })
         }
       });
     //   .catch((err) => {
@@ -190,11 +190,11 @@ app.post("/users/login", (req, res) => {
     //       })
     //   })
     }
-  })  .catch((err) => {
-    console.log(err)
-    res.status(500).send({
-        message: 'server error'
-    })
+//   })  .catch((err) => {
+//     console.log(err)
+//     res.status(500).send({
+//         message: 'server error'
+//     })
 })
 });
 
