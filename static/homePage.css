@@ -34,7 +34,13 @@ bottom: 160px;
 }
 
 .startQuizButton{
-    
+
 }
 
+.quizItem {
+    font-family: system-ui, sans-serif;
+    color:rgb(52, 52, 52);
+    font-weight: 700;
+    
+}
 
