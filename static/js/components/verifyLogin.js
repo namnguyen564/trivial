@@ -45,9 +45,9 @@ export function verifyLogin(){
                 // location.reload()
 
             })
-            .catch((err) =>{
-                console.log(err)
-            })
+            // .catch((err) =>{
+            //     console.log(err)
+            // })
 
     })
 
