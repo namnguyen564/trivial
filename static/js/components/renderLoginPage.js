@@ -6,6 +6,7 @@ import { guestLogin } from './guestLogin.js'
 export function renderLoginPage() {
     const header = document.getElementById("header-nav");
     const middle = document.getElementById("middle-nav");
+    const errorMsg = document.getElementById("error-msg");
 
     if(isLoggedIn){
         header.innerHTML = `
@@ -16,6 +17,7 @@ export function renderLoginPage() {
 
         middle.innerHTML =''
        
+        errorMsg.innerHTML =  ''
         document.getElementById('logOutButton').addEventListener('click', loggedOut)
     }
 
@@ -38,7 +40,7 @@ export function renderLoginPage() {
         <input type="submit" id="guestLoginButton" value="Guest Login" >
         </div>
         `
-      
+        
       
 
 

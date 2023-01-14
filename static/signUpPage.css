@@ -100,3 +100,8 @@
   color: #f2ffc5;
   font-weight: 500;
 }
+
+#error-msg{
+    font-weight: 500;
+    color: #f2ffc5;
+}

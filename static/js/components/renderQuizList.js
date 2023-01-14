@@ -18,6 +18,7 @@ export function renderQuizList() {
   console.log("create list");
   page.appendChild(quizList);
 
+
   axios.get("http://localhost:3000/api/quiz").then((response) => {
     const listItems = response.data;
 
@@ -27,6 +28,7 @@ export function renderQuizList() {
       quiz.id = `quiz-${item.id}`;
       quiz.innerHTML = `
                 ${item.name} <button id="start-button-${item.id}">Start Quiz</button>
+
             `;
       quizList.appendChild(quiz);
       document
